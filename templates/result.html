@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Video Ready</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #eef2ff;
+      --primary: #7c4dff;
+      --primary-soft: #ede9fe;
+      --secondary: #ff7043;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Arial', sans-serif;
+      background: radial-gradient(circle at top left, #e3f2fd, var(--bg));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .wrapper {
+      max-width: 900px;
+      width: 100%;
+      padding: 28px;
+    }
+
+    .card {
+      background: linear-gradient(135deg, #fffdf7, #fff5eb);
+      border-radius: 28px;
+      padding: 32px 32px 26px;
+      box-shadow:
+        0 22px 45px rgba(15, 23, 42, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before,
+    .card::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(40px);
+      opacity: 0.35;
+      z-index: -1;
+    }
+
+    .card::before {
+      width: 220px;
+      height: 220px;
+      background: #bbdefb;
+      top: -60px;
+      right: -40px;
+    }
+
+    .card::after {
+      width: 260px;
+      height: 260px;
+      background: #ffe0b2;
+      bottom: -80px;
+      left: -40px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .title-block {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status-pill {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #a7f3d0, #22c55e);
+      box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.15);
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 26px;
+      color: var(--text-main);
+    }
+
+    .subtitle {
+      margin: 2px 0 0;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .tag {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 850px) {
+      .card {
+        padding: 24px 20px 20px;
+        border-radius: 22px;
+      }
+      .content {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .video-shell {
+      background: #020617;
+      border-radius: 22px;
+      padding: 14px 14px 18px;
+      box-shadow: 0 18px 30px rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(15, 23, 42, 0.8);
+    }
+
+    .video-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 12px;
+      color: #e5e7eb;
+    }
+
+    .video-label span {
+      opacity: 0.8;
+    }
+
+    .dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+    }
+
+    .dot.red { background: #f97373; }
+    .dot.yellow { background: #facc15; }
+    .dot.green { background: #34d399; }
+
+    .video-shell video {
+      width: 100%;
+      max-height: 420px;
+      border-radius: 16px;
+      border: 1px solid rgba(15, 23, 42, 0.7);
+      display: block;
+      background: #000;
+    }
+
+    .side-panel-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .side-panel-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .meta-box {
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .meta-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .meta-label {
+      font-weight: 500;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at top left, #7c4dff, #5c6bc0);
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(92, 107, 192, 0.55);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 30px rgba(92, 107, 192, 0.6);
+      filter: brightness(1.04);
+    }
+
+    .btn-secondary {
+      background: rgba(15, 23, 42, 0.04);
+      color: var(--text-main);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(148, 163, 184, 0.4);
+      filter: brightness(1.02);
+    }
+
+    .btn span.icon {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="card">
+      <div class="header">
+        <div class="title-block">
+          <div class="status-pill"></div>
+          <div>
+            <h2>Video Ready!</h2>
+            <p class="subtitle">Your audio has been transformed into a video.</p>
+          </div>
+        </div>
+        <span class="tag">Video generated</span>
+      </div>
+
+      <div class="content">
+        <div class="video-shell">
+          <div class="video-label">
+            <span>Preview</span>
+            <div class="dots">
+              <div class="dot red"></div>
+              <div class="dot yellow"></div>
+              <div class="dot green"></div>
+            </div>
+          </div>
+          <video controls preload="metadata">
+            <source src="{{ audio.video_file.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+        <div>
+          <div class="side-panel-title">What’s next?</div>
+          <p class="side-panel-text">
+            Download your video or go back to the dashboard to generate more from your audio files.
+          </p>
+
+          <div class="meta-box">
+            <div class="meta-row">
+              <span class="meta-label">File:</span>
+              <span>{{ audio.audio_file.name }}</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Format:</span>
+              <span>MP4</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Status:</span>
+              <span>Completed</span>
+            </div>
+          </div>
+
+          <div class="buttons">
+            <a class="btn btn-primary" download href="{{ audio.video_file.url }}">
+              <span class="icon">⬇</span>
+              <span>Download video</span>
+            </a>
+            <a class="btn btn-secondary" href="/dashboard/">
+              <span class="icon">←</span>
+              <span>Back to dashboard</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
